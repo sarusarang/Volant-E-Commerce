@@ -1,11 +1,141 @@
 import React, { useState } from 'react'
 import './Login.css'
+import { UserRegister, UserLogin } from '../Services/AllApi'
+import { toast } from 'sonner'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
 
 
     // TO check Login and Register Status
     const [LoginStatus, setLoginStatus] = useState(true)
+
+
+    const Navigate = useNavigate()
+
+
+    //Login Data
+    const [LoginData, SetLoginData] = useState({
+
+        email: "", password: "", name: ""
+
+    })
+
+
+
+    // UserLogin
+    const handleLogin = async () => {
+
+        try {
+
+
+            const { email, password } = LoginData
+
+
+            if (!email || !password) {
+
+                toast.warning("Empty Feild Please Try Again")
+
+
+            }
+            else {
+
+                const res = await UserLogin({ email, password })
+
+                if (res.status == 200) {
+
+                    sessionStorage.setItem("token", res.data.token)
+                    sessionStorage.setItem("user", res.data.user)
+                    sessionStorage.setItem("_id", res.data._id)
+                    toast.success("Login Success")
+
+                    setTimeout(() => {
+
+                        Navigate('/')
+
+                    }, 1000)
+
+                }
+                else {
+
+                    toast.error(res.response.data)
+
+
+                }
+
+
+            }
+
+
+
+        }
+        catch (err) {
+
+
+            console.log(err);
+
+        }
+
+
+    }
+
+    console.log(LoginData);
+
+
+    // Handle Register 
+    const handleRegister = async () => {
+
+
+        try {
+
+
+            const { email, password ,name } = LoginData
+
+
+            if (!email || !password || !name) {
+
+                toast.warning("Empty Feild Please Try Again")
+
+
+            }
+            else {
+
+                const res = await UserRegister({ name,email, password})
+
+                if (res.status == 200) {
+
+                    sessionStorage.setItem("token", res.data.token)
+                    sessionStorage.setItem("user", res.data.user)
+                    sessionStorage.setItem("_id", res.data._id)
+                    toast.success("Registration Success")
+
+                    setTimeout(() => {
+
+                        Navigate('/')
+
+                    }, 1000)
+
+                }
+                else {
+
+                    toast.error(res.response.data)
+
+                }
+
+
+            }
+
+        }
+        catch (err) {
+
+
+            console.log(err);
+
+        }
+
+    }
+
+
 
 
     return (
@@ -49,11 +179,11 @@ function Login() {
 
                                     <h1>Login</h1>
 
-                                    <input type="email" className='form-control' placeholder='Enter your Email' /> <br />
+                                    <input type="email" onChange={(e) => { SetLoginData({ ...LoginData, email: e.target.value }) }} className='form-control' placeholder='Enter your Email' /> <br />
 
-                                    <input type="password" className='form-control' placeholder='Enter Your Password' />
+                                    <input type="password" onChange={(e) => { SetLoginData({ ...LoginData, password: e.target.value }) }} className='form-control' placeholder='Enter Your Password' />
 
-                                    <button type='submit' className='btn-login w-100 mt-3'>Login</button>
+                                    <button type='submit' onClick={handleLogin} className='btn-login w-100 mt-3'>Login</button>
 
                                     <p className='text-center mt-3'>Don't have an account ? <a className='dont' onClick={() => { setLoginStatus(false) }}>Register</a></p>
 
@@ -68,13 +198,13 @@ function Login() {
 
                                     <h1>Sign Up</h1>
 
-                                    <input type="text" className='form-control' placeholder='Enter your Name' /> <br />
+                                    <input type="text"  onChange={(e) => { SetLoginData({ ...LoginData, name: e.target.value }) }} className='form-control' placeholder='Enter your Name' /> <br />
 
-                                    <input type="email" className='form-control' placeholder='Enter your Email' /> <br />
+                                    <input type="email"  onChange={(e) => { SetLoginData({ ...LoginData, email: e.target.value }) }} className='form-control' placeholder='Enter your Email' /> <br />
 
-                                    <input type="password" className='form-control' placeholder='Enter Your Password' />
+                                    <input type="password"  onChange={(e) => { SetLoginData({ ...LoginData, password: e.target.value }) }} className='form-control' placeholder='Enter Your Password' />
 
-                                    <button type='submit' className='btn-login w-100 mt-3'>Register</button>
+                                    <button type='submit' onClick={handleRegister} className='btn-login w-100 mt-3'>Register</button>
 
                                     <p className='text-center mt-3'>Already Registerd ? <a className='dont' onClick={() => { setLoginStatus(true) }}>Login</a></p>
 
@@ -85,15 +215,7 @@ function Login() {
                         }
 
 
-
-
-
-
                     </div>
-
-
-
-
 
 
                 </div>

@@ -1,11 +1,20 @@
 import { CommonApi } from "./CommonApi";
 
-const base_Url = ""
+const base_Url = "http://localhost:3000"
 
 
-export const getProducts = async()=>{
+// User Register
+export const UserRegister = async(data)=>{
 
-    return CommonApi("GET",base_Url," ")
+    return CommonApi("POST",`${base_Url}/register`,data)
+
+}
+
+
+// User Login
+export const UserLogin = async(data)=>{
+
+    return CommonApi("POST",`${base_Url}/login`,data)
 
 }
 

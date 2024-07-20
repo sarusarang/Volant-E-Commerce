@@ -97,6 +97,9 @@
 
         width: 70% !important;
     }
+
+
+  
 }
 
 
@@ -118,6 +121,11 @@
         width: 70% !important;
     }
 
+    .login-logo {
+
+        width: 25%;
+    
+    }
 
 }
 
@@ -138,6 +146,12 @@
     .form-img {
 
         width: 70% !important;
+    }
+
+    .login-logo {
+
+        width: 25%;
+    
     }
 
 

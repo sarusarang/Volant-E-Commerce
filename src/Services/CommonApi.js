@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const CommonApi = async (reqmethod, apiurl, reqbody) => {
+export const CommonApi = async (reqmethod, apiurl, reqbody,headers) => {
 
 
     const config = {
@@ -9,7 +9,7 @@ export const CommonApi = async (reqmethod, apiurl, reqbody) => {
         method: reqmethod,
         url: apiurl,
         data: reqbody,
-        header: { 'Content-Type': 'application/json' }
+        header: headers ? headers : { 'Content-Type': 'application/json' }
 
     }
 
