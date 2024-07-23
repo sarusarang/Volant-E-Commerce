@@ -5,3 +5,25 @@
   box-sizing: border-box;
 
 }
+
+.Gents-slide h1{
+
+  font-weight: 700;
+
+
+}
+
+.Gents-slide p{
+
+  color: #a1a1a1;
+  font-style: italic;
+  font-weight: 400;
+
+}
+
+.admin-bg{
+
+
+  background-color: #fff3cd !important;
+
+}
