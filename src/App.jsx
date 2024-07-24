@@ -65,7 +65,7 @@ function App() {
 
         <Route path='/Wish' element={<Wishlist />} />
 
-        <Route path='/pro' element={<Product />} />
+        <Route path='/pro/:id' element={<Product />} />
 
         <Route path='/ord' element={<Orders />} />
 

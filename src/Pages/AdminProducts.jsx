@@ -1,10 +1,72 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './AdminProducts.css'
 import AddProducts from '../Components/AddProducts'
+import { showproducts, Deleteproducts } from '../Services/AllApi'
+import { toast } from 'sonner'
 
 function AdminProducts() {
 
     const [Status, setStatus] = useState(true)
+
+    const [Products, setProducts] = useState([])
+
+    const [Delete,setDelete] = useState()
+
+
+    // Get Products
+    useEffect(() => {
+
+
+        const getproducts = async () => {
+
+
+            const res = await showproducts()
+
+            if (res.status == 200) {
+
+
+                setProducts(res.data)
+
+
+            }
+
+
+        }
+
+
+        getproducts()
+
+    }, [Delete])
+
+
+    //   handle delete products
+    const handleDelete = async(id)=>{
+
+        try{
+
+
+            const res = await Deleteproducts(id)
+
+
+            if(res.status == 200){
+
+                toast.success("Product Deleted Successfully...!")
+
+                setDelete(res.data)
+
+
+            }
+
+        }
+
+        catch(err){
+
+            console.log(err);
+
+
+        }
+
+    }
 
 
 
@@ -15,7 +77,7 @@ function AdminProducts() {
             <section className='container'>
 
 
-                <h1 className='text-center'>{ Status? "All Products" : " "}</h1>
+                <h1 className='text-center'>{Status ? "All Products" : " "}</h1>
 
 
                 <button className='btn btn-success' onClick={() => { setStatus(!Status) }}>{Status ? "Add Product" : "Show Products"}</button>
@@ -37,8 +99,8 @@ function AdminProducts() {
                                     <th>Product Name</th>
                                     <th>Product Image</th>
                                     <th>Product Price</th>
-                                    <th>Brand</th>
-                                    <th>Color</th>
+                                    <th>Category</th>
+                                    <th>Gender</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -47,61 +109,71 @@ function AdminProducts() {
                             <tbody>
 
 
-                                <tr>
+                                {
+
+                                    Products ?
+
+                                        Products.map((item) => (
+
+
+                                            <tr>
 
 
 
-                                    <td>
-                                        <p className="fw-normal mb-1">Footware - Sandles</p>
+                                                <td>
+                                                    <p className="fw-normal mb-1">{item.ProductName}</p>
 
-                                    </td>
+                                                </td>
 
-                                    <td>
-                                        <div className="d-flex align-items-center">
+                                                <td>
+                                                    <div className="d-flex align-items-center">
 
-                                            <img
-                                                src="https://www.volantfootwear.com/staticfiles/assets/images/gents-01.jpg"
-                                                alt=""
-                                                style={{ width: '100px', height: '100px' }}
-
-
-                                            />
-
-                                        </div>
+                                                        <img
+                                                            src={item.variants[0].Image}
+                                                            alt=""
+                                                            style={{ width: '100px', height: '100px' }}
 
 
-                                    </td>
+                                                        />
 
-                                    <td>
-                                        <p className="fw-normal mb-1 ms-4">500$</p>
-
-                                    </td>
+                                                    </div>
 
 
+                                                </td>
+
+                                                <td>
+                                                    <p className="fw-normal mb-1 ms-4">{item.Price}</p>
+
+                                                </td>
 
 
-
-                                    <td>
-                                        Volant
-                                    </td>
-
+                                                <td>
+                                                    {item.Category}
+                                                </td>
 
 
+                                                <td>{item.Gender}</td>
 
 
-
-                                    <td>Black</td>
-
-
-                                    <td>
-                                        <button type="button" className="btn btn-link btn-sm btn-rounded text-danger">
-                                            <i class="fa-solid fa-trash fa-lg"></i>
-                                        </button>
-                                    </td>
+                                                <td>
+                                                    <button type="button" className="btn btn-link btn-sm btn-rounded text-danger" onClick={()=>{handleDelete(item._id)}}>
+                                                        <i class="fa-solid fa-trash fa-lg"></i>
+                                                    </button>
+                                                </td>
 
 
 
-                                </tr>
+                                            </tr>
+
+
+                                        ))
+
+                                        :
+
+                                        <h1>No Products</h1>
+
+
+                                }
 
                             </tbody>
 

@@ -1,10 +1,58 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Slide.css'
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { showproducts } from '../Services/AllApi';
+import { useNavigate } from 'react-router-dom';
 
 
 function GentsSlide() {
+
+
+    const [Gents, SetGents] = useState([])
+
+    const [Loading, SetLoading] = useState(true)
+
+
+    const Naviagte = useNavigate()
+
+
+    // Get Products Gents
+    useEffect(() => {
+
+        const gents = async () => {
+
+
+            try {
+
+                const res = await showproducts()
+
+                if (res.status == 200) {
+
+                    const gentsdata = res.data.filter((item) => (item.Gender == "Gents"))
+
+                    SetGents(gentsdata)
+
+                    SetLoading(false)
+
+
+                }
+
+
+            }
+            catch (err) {
+
+                console.log(err);
+
+            }
+        }
+
+        gents()
+
+
+    }, [])
+
+
 
 
     const responsive = {
@@ -39,272 +87,76 @@ function GentsSlide() {
 
 
 
-                <div>
+                {
 
-                    <div className="container page-wrapper">
 
-                        <div className="page-inner">
-                            <div className="row">
-                                <div className="el-wrapper">
-                                    <div className="box-up">
+                    Loading ?
 
-                                        <img className="img-fluid img" src="https://www.volantfootwear.com/staticfiles/assets/images/ladies-01.jpg" alt="" />
-                                        <div className="img-info">
-                                            <div className="info-inner">
-                                                <span className="p-name">I feel like Pablo</span>
-                                                <span className="p-company">Volant</span>
+
+                        <div className='d-flex justify-content-center align-items-center w-100'>
+
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+
+                            <h3>Loading...</h3>
+
+                        </div>
+
+                        :
+
+
+
+                        Gents.map((item) => (
+
+
+                            <div>
+
+                                <div className="container page-wrapper">
+
+                                    <div className="page-inner">
+                                        <div className="row">
+                                            <div className="el-wrapper">
+
+                                                <div className="box-up" onClick={() => { Naviagte(`/pro/${item._id}`) }}>
+
+                                                    <img className="img-fluid img" src={item.variants[0].Image} alt="" style={{ height: '100%' }} />
+                                                    <div className="img-info">
+                                                        <div className="info-inner">
+                                                            <span className="p-name">{item.ProductName}</span>
+                                                            <span className="p-company">Volant</span>
+                                                        </div>
+                                                        <div className="a-size">Available sizes : <span className="size">6, 7 , 8, 9, 10, 11</span></div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div className="box-down">
+                                                    <div className="h-bg">
+                                                        <div className="h-bg-inner"></div>
+                                                    </div>
+
+                                                    <a className="cart" href="#">
+                                                        <span className="price">Just  ₹{item.Price}</span>
+
+                                                        <span className="add-to-cart">
+                                                            <span className="txt">Add in cart</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
                                             </div>
-                                            <div className="a-size">Available sizes : <span className="size">S , M , L , XL</span></div>
                                         </div>
-
-                                    </div>
-
-                                    <div className="box-down">
-                                        <div className="h-bg">
-                                            <div className="h-bg-inner"></div>
-                                        </div>
-
-                                        <a className="cart" href="#">
-                                            <span className="price">$120</span>
-
-                                            <span className="add-to-cart">
-                                                <span className="txt">Add in cart</span>
-                                            </span>
-                                        </a>
                                     </div>
                                 </div>
+
+
                             </div>
-                        </div>
-                    </div>
 
 
-                </div>
+                        ))
 
-
-
-                <div>
-
-                    <div className="container page-wrapper">
-
-                        <div className="page-inner">
-                            <div className="row">
-                                <div className="el-wrapper">
-                                    <div className="box-up">
-
-                                        <img className="img-fluid img" src="https://www.volantfootwear.com/staticfiles/assets/images/gents-05.jpg" alt="" />
-                                        <div className="img-info">
-                                            <div className="info-inner">
-                                                <span className="p-name">I feel like Pablo</span>
-                                                <span className="p-company">Volant</span>
-                                            </div>
-                                            <div className="a-size">Available sizes : <span className="size">S , M , L , XL</span></div>
-                                        </div>
-
-                                    </div>
-
-                                    <div className="box-down">
-                                        <div className="h-bg">
-                                            <div className="h-bg-inner"></div>
-                                        </div>
-
-                                        <a className="cart" href="#">
-                                            <span className="price">$120</span>
-
-                                            <span className="add-to-cart">
-                                                <span className="txt">Add in cart</span>
-                                            </span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-
-
-
-
-
-                <div>
-
-                    <div className="container page-wrapper">
-
-                        <div className="page-inner">
-                            <div className="row">
-                                <div className="el-wrapper">
-                                    <div className="box-up">
-
-                                        <img className="img-fluid img" src="https://www.volantfootwear.com/staticfiles/assets/images/ladies-01.jpg" alt="" />
-                                        <div className="img-info">
-                                            <div className="info-inner">
-                                                <span className="p-name">I feel like Pablo</span>
-                                                <span className="p-company">Volant</span>
-                                            </div>
-                                            <div className="a-size">Available sizes : <span className="size">S , M , L , XL</span></div>
-                                        </div>
-
-                                    </div>
-
-                                    <div className="box-down">
-                                        <div className="h-bg">
-                                            <div className="h-bg-inner"></div>
-                                        </div>
-
-                                        <a className="cart" href="#">
-                                            <span className="price">$120</span>
-
-                                            <span className="add-to-cart">
-                                                <span className="txt">Add in cart</span>
-                                            </span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-
-
-
-
-
-                <div>
-
-                    <div className="container page-wrapper">
-
-                        <div className="page-inner">
-                            <div className="row">
-                                <div className="el-wrapper">
-                                    <div className="box-up">
-
-                                        <img className="img-fluid img" src="https://www.volantfootwear.com/staticfiles/assets/images/ladies-01.jpg" alt="" />
-                                        <div className="img-info">
-                                            <div className="info-inner">
-                                                <span className="p-name">I feel like Pablo</span>
-                                                <span className="p-company">Volant</span>
-                                            </div>
-                                            <div className="a-size">Available sizes : <span className="size">S , M , L , XL</span></div>
-                                        </div>
-
-                                    </div>
-
-                                    <div className="box-down">
-                                        <div className="h-bg">
-                                            <div className="h-bg-inner"></div>
-                                        </div>
-
-                                        <a className="cart" href="#">
-                                            <span className="price">$120</span>
-
-                                            <span className="add-to-cart">
-                                                <span className="txt">Add in cart</span>
-                                            </span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-
-
-
-
-                <div>
-
-                    <div className="container page-wrapper">
-
-                        <div className="page-inner">
-                            <div className="row">
-                                <div className="el-wrapper">
-                                    <div className="box-up">
-
-                                        <img className="img-fluid img" src="https://www.volantfootwear.com/staticfiles/assets/images/ladies-01.jpg" alt="" />
-                                        <div className="img-info">
-                                            <div className="info-inner">
-                                                <span className="p-name">I feel like Pablo</span>
-                                                <span className="p-company">Volant</span>
-                                            </div>
-                                            <div className="a-size">Available sizes : <span className="size">S , M , L , XL</span></div>
-                                        </div>
-
-                                    </div>
-
-                                    <div className="box-down">
-                                        <div className="h-bg">
-                                            <div className="h-bg-inner"></div>
-                                        </div>
-
-                                        <a className="cart" href="#">
-                                            <span className="price">$120</span>
-
-                                            <span className="add-to-cart">
-                                                <span className="txt">Add in cart</span>
-                                            </span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-
-
-
-
-                <div>
-
-                    <div className="container page-wrapper">
-
-                        <div className="page-inner">
-                            <div className="row">
-                                <div className="el-wrapper">
-                                    <div className="box-up">
-
-                                        <img className="img-fluid img" src="https://www.volantfootwear.com/staticfiles/assets/images/ladies-01.jpg" alt="" />
-                                        <div className="img-info">
-                                            <div className="info-inner">
-                                                <span className="p-name">I feel like Pablo</span>
-                                                <span className="p-company">Volant</span>
-                                            </div>
-                                            <div className="a-size">Available sizes : <span className="size">S , M , L , XL</span></div>
-                                        </div>
-
-                                    </div>
-
-                                    <div className="box-down">
-                                        <div className="h-bg">
-                                            <div className="h-bg-inner"></div>
-                                        </div>
-
-                                        <a className="cart" href="#">
-                                            <span className="price">$120</span>
-
-                                            <span className="add-to-cart">
-                                                <span className="txt">Add in cart</span>
-                                            </span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-
-
-
-
-
+                      
+                }
 
 
             </Carousel>
