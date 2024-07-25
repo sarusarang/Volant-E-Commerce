@@ -1,6 +1,6 @@
 import { CommonApi } from "./CommonApi";
 
-const base_Url = "http://localhost:3000"
+const base_Url = "https://e-commerce-backend-s58v.onrender.com"
 
 
 // User Register
