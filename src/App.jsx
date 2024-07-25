@@ -9,6 +9,7 @@ import Footer from './Components/Footer'
 import Orders from './Pages/Orders'
 import AdminLogin from './Pages/AdminLogin'
 import AdminDash from './Pages/AdminDash'
+import OrderForm from './Pages/OrderForm'
 import { Toaster } from 'sonner'
 import { useEffect, useState } from 'react'
 
@@ -22,11 +23,13 @@ function App() {
   const [Hide, sethide] = useState(false)
 
 
+
   useEffect(() => {
+
 
     const hidecheck = () => {
 
-      if (location.pathname == '/auth' || location.pathname == '/adminlog' ||  location.pathname == '/admindash') {
+      if (location.pathname == '/auth' || location.pathname == '/adminlog' || location.pathname == '/admindash') {
 
 
         sethide(true)
@@ -44,7 +47,7 @@ function App() {
 
     hidecheck()
 
-  },[location])
+  }, [location])
 
 
 
@@ -72,6 +75,8 @@ function App() {
         <Route path='/adminlog' element={<AdminLogin />} />
 
         <Route path='/admindash' element={<AdminDash />} />
+
+        <Route path='/orderform' element={<OrderForm />} />
 
 
       </Routes>

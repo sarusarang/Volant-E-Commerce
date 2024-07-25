@@ -22,6 +22,7 @@ function AdminOrders() {
                             <th>Product Name</th>
                             <th>Product Image</th>
                             <th>Product Price</th>
+                            <th>Client Name</th>
                             <th>Address</th>
                             <th>Order Status</th>
                             <th>Ordered Date</th>
@@ -65,6 +66,12 @@ function AdminOrders() {
 
                             </td>
 
+                            <td>
+                                
+                                <p className="fw-normal mb-1 ms-4">SARANG A</p>
+
+                            </td>
+
 
                             <td>
                                 <p className="fw-normal mb-1 ms-4">PERALASSERY VADAKUMBAD</p>
@@ -84,24 +91,12 @@ function AdminOrders() {
                             </td>
 
 
-
-
-
                             <td>
                                 10
                             </td>
 
 
-
-
-
-
                             <td>Black</td>
-
-
-
-
-
 
                         </tr>
 

@@ -3,13 +3,17 @@ import './Slide.css'
 import { useState, useEffect } from 'react';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { showproducts } from '../Services/AllApi';
+import { showproducts, AddtoCart } from '../Services/AllApi';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { useDispatch } from 'react-redux';
+import { ADDSTATUS } from '../STORE/CartSlice';
 
 function KidsSlide() {
 
 
 
+  const Dispatch = useDispatch()
 
   const [Kids, SetKids] = useState([])
 
@@ -55,6 +59,64 @@ function KidsSlide() {
 
 
   }, [])
+
+
+
+
+  // handle Add to cart
+  const handleCart = async (product, name, price, image, gender, category) => {
+
+    try {
+
+      const user = sessionStorage.getItem("_id")
+
+      if (!user) {
+
+        toast.warning("Please Login First...!!")
+
+        setTimeout(() => {
+
+          Naviagte('/auth')
+
+
+        }, 1000);
+
+
+      }
+      else {
+
+        const res = await AddtoCart({ user, product, name, price, image, gender, category })
+
+        if (res.status == 200) {
+
+          Dispatch(ADDSTATUS(res.data))
+
+          toast.success("Item Added To Cart Successfully")
+          // To Mount on the top
+          window.scrollTo(0, 0);
+
+        } else {
+
+          toast.warning(res.response.data)
+
+        }
+
+      }
+
+
+
+    }
+    catch (err) {
+
+
+      console.log(err);
+
+    }
+
+
+
+  }
+
 
 
 
@@ -132,15 +194,15 @@ function KidsSlide() {
 
                         </div>
 
-                        <div className="box-down">
+                        <div className="box-down" onClick={() => { handleCart(item._id, item.ProductName, item.Price, item.variants[0].Image, item.Gender, item.Category) }}>
                           <div className="h-bg">
                             <div className="h-bg-inner"></div>
                           </div>
 
-                          <a className="cart" href="#">
+                          <a className="cart">
                             <span className="price">Just ₹{item.Price}</span>
 
-                            <span className="add-to-cart">
+                            <span className="add-to-cart" >
                               <span className="txt">Add in cart</span>
                             </span>
                           </a>

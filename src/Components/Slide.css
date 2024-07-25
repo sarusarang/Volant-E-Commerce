@@ -234,6 +234,7 @@ body {
   left: 0;
   font-family: "Lato", sans-serif;
   font-weight: 700;
+  cursor: pointer;
 }
 
 .cart .price {

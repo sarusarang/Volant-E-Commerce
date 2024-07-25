@@ -1,7 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Orders.css'
+import { toast } from 'sonner'
+import { useNavigate } from 'react-router-dom'
 
 function Orders() {
+
+
+    const Navigate = useNavigate()
+
+    useEffect(() => {
+
+        // Checking if there is a user or not
+        const checkUser = () => {
+
+            const id = sessionStorage.getItem("_id")
+
+            if (!id) {
+
+                Navigate('/auth')
+
+            }
+
+        }
+
+        checkUser()
+
+    }, [])
 
 
 
@@ -14,7 +38,7 @@ function Orders() {
 
                 <div className="container py-5 h-100">
 
- 
+
                     <div className="row d-flex justify-content-center align-items-center h-100 ">
 
                         <div className="col-md-12 col-lg-12 col-xl-12">
@@ -79,10 +103,10 @@ function Orders() {
 
                                     <div className="d-flex justify-content-between">
 
-                                       
+
                                         <h5 className="fw-normal mb-0"><a className='btn btn-danger' href="#!">Cancel</a></h5>
                                         <div className="border-start h-100"></div>
-                                       
+
 
 
                                     </div>

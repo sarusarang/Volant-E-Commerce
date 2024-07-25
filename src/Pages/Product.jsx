@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import './Product.css'
-import { useNavigate, useParams } from 'react-router-dom';
-import { showproducts } from '../Services/AllApi';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { showproducts, AddtoCart } from '../Services/AllApi';
+import { ADDSTATUS } from '../STORE/CartSlice';
+import { useDispatch } from 'react-redux';
+import { toast } from 'sonner';
+
+
 
 function Product() {
 
@@ -13,7 +18,10 @@ function Product() {
 
   const [product_id, SetProduct_id] = useState(id)
 
+  const Dispatch = useDispatch()
 
+
+  const Navigate = useNavigate()
 
   // to set the product data
   const [Product, SetProduct] = useState({
@@ -93,7 +101,64 @@ function Product() {
 
 
 
+  // handle Add to cart
+  const handleCart = async (product, name, price, image, gender, category) => {
+
+    try {
+
+      const user = sessionStorage.getItem("_id")
+
+      if (!user) {
+
+        toast.warning("Please Login First...!!")
+
+        setTimeout(() => {
+
+          Navigate('/auth')
+
+
+        }, 1000);
+
+
+      }
+      else {
+
+        const res = await AddtoCart({ user, product, name, price, image, gender, category })
+
+        if (res.status == 200) {
+
+          Dispatch(ADDSTATUS(res.data))
+
+          toast.success("Item Added To Cart Successfully")
+
+          // To Mount on the top
+          window.scrollTo(0, 0);
+
+        } else {
+
+          toast.warning(res.response.data)
+
+        }
+
+      }
+
+
+
+    }
+    catch (err) {
+
+
+      console.log(err);
+
+    }
+
+
+
+  }
+
+
   console.log(Simliar);
+
 
   return (
 
@@ -219,9 +284,13 @@ function Product() {
 
                 </div>
 
+                <Link to={'/orderform'}>
 
-                <a href="#" className="btn btn-warning shadow-0 me-3"> Buy now </a>
-                <a href="#" className="btn btn-primary shadow-0"> <i className="me-1 fa fa-shopping-basket"></i> Add to cart </a>
+                  <a className="btn btn-warning shadow-0 me-3"> Buy now </a>
+
+                </Link>
+
+                <a className="btn btn-primary shadow-0" onClick={() => { handleCart(Product._id, Product.ProductName, Product.Price, Product.variants[0].Image, Product.Gender, Product.Category,) }}> <i className="me-1 fa fa-shopping-basket"></i> Add to cart </a>
 
               </div>
             </main>
@@ -253,7 +322,7 @@ function Product() {
                         <div className="el-wrapper">
                           <div className="box-up" onClick={() => { SetProduct_id(item._id) }}>
 
-                            <img className="img-fluid img" src={item.variants[0].Image} alt=""  style={{height:'100%'}}/>
+                            <img className="img-fluid img" src={item.variants[0].Image} alt="" style={{ height: '100%' }} />
                             <div className="img-info">
                               <div className="info-inner">
                                 <span className="p-name">{item.ProductName}</span>
@@ -264,7 +333,7 @@ function Product() {
 
                           </div>
 
-                          <div className="box-down">
+                          <div className="box-down" onClick={() => { handleCart(item._id, item.ProductName, item.Price, item.variants[0].Image, item.Gender, item.Category) }}>
                             <div className="h-bg">
                               <div className="h-bg-inner"></div>
                             </div>

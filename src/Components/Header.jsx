@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Header.css'
 import { Link } from 'react-router-dom'
 import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { ShowCart } from '../Services/AllApi';
+import { useSelector } from 'react-redux';
 
 function Header() {
 
@@ -17,6 +19,64 @@ function Header() {
       padding: '0 4px',
     },
   }));
+
+
+
+  const {CartStatus} = useSelector((state)=>state.CartRed)
+
+
+
+  const id = sessionStorage.getItem("_id")
+
+
+
+  const [CartLength,setCartLength] = useState([])
+
+
+  useEffect(() => {
+
+
+    const cartitems = async () => {
+
+      try {
+
+        if(id){
+
+          const res = await ShowCart(id)
+
+          if(res.status == 200){
+
+
+            setCartLength(res.data)
+
+
+          }
+          else{
+
+            setCartLength([])
+
+          }
+
+
+
+        }
+
+
+
+      }
+      catch (err) {
+
+        console.log(err);
+
+      }
+
+
+    }
+
+    cartitems()
+
+
+  },[CartStatus])
 
 
   return (
@@ -114,9 +174,9 @@ function Header() {
 
             <IconButton aria-label="cart">
 
-              <StyledBadge badgeContent={0} showZero color="success" anchorOrigin={{vertical:'top' , horizontal:'right'}} >
+              <StyledBadge badgeContent={CartLength.length} showZero color="success" anchorOrigin={{ vertical: 'top', horizontal: 'right' }} >
 
-                <ShoppingCartIcon style={{color:'#000'}} />
+                <ShoppingCartIcon style={{ color: '#000' }} />
 
               </StyledBadge>
 
