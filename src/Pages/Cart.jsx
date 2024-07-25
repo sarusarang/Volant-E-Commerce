@@ -166,7 +166,7 @@ function Cart() {
 
                               <div className="me-lg-5">
                                 <div className="d-flex">
-                                  <img src={item.Image} className="border rounded me-3" style={{ width: '96px', height: '96px' }} />
+                                  <img src={item.Image} onClick={() => { Navigate(`/pro/${item.ProductId}`) }} className="border rounded me-3 cart-img" style={{ width: '96px', height: '96px' }} />
                                   <div className="">
                                     <a href="#" className="nav-link">{item.ProductName}</a>
                                     <p className="text-muted">{item.Gender}, {item.Category}</p>
@@ -178,7 +178,7 @@ function Cart() {
 
                             <div className="col-lg-2 col-sm-6 col-6 d-flex flex-row flex-lg-column flex-xl-row text-nowrap">
 
-                              <div className="">
+                              {/* <div className="">
 
 
                                 <select style={{ width: '100px' }} className="form-select me-4">
@@ -187,7 +187,7 @@ function Cart() {
                                   <option>3</option>
                                   <option>4</option>
                                 </select>
-                              </div>
+                              </div> */}
 
 
                               <div className="">

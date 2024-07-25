@@ -1,12 +1,52 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { AllOrders } from '../Services/AllApi'
 
 function AdminOrders() {
+
+
+    const [Odrers, SetOrders] = useState([])
+
+    useEffect(() => {
+
+        const getorders = async () => {
+
+            try {
+
+                const res = await AllOrders()
+
+                if (res.status == 200) {
+
+                    SetOrders(res.data)
+
+                }
+
+
+            }
+            catch (err) {
+
+                console.log(err);
+
+
+            }
+
+        }
+
+
+
+        getorders()
+
+    }, [])
+
+    console.log(Odrers);
+
+
+
     return (
 
 
         <>
 
-            <section className='container'>
+            <section className='container-fluid'>
 
                 <h1 className='text-center'>Orders</h1>
 
@@ -20,14 +60,17 @@ function AdminOrders() {
 
                         <tr>
                             <th>Product Name</th>
-                            <th>Product Image</th>
-                            <th>Product Price</th>
-                            <th>Client Name</th>
-                            <th>Address</th>
-                            <th>Order Status</th>
-                            <th>Ordered Date</th>
+                            <th>Image</th>
+                            <th>Price</th>
                             <th>Size</th>
                             <th>Color</th>
+                            <th>User Name</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Ordered Date</th>
+                            <th>Cancelation</th>
+
+
 
                         </tr>
                     </thead>
@@ -36,69 +79,98 @@ function AdminOrders() {
                     <tbody>
 
 
-                        <tr>
+                        {
+
+                            Odrers.length > 0 ?
+
+                                Odrers.map((item) => (
+
+
+                                    <tr>
 
 
 
-                            <td>
-                                <p className="fw-normal mb-1">Footware - Sandles</p>
+                                        <td>
+                                            <p className="fw-normal mb-1">{item.ProductName}</p>
 
-                            </td>
-
-                            <td>
-                                <div className="d-flex align-items-center">
-
-                                    <img
-                                        src="https://www.volantfootwear.com/staticfiles/assets/images/gents-01.jpg"
-                                        alt=""
-                                        style={{ width: '100px', height: '100px' }}
+                                        </td>
 
 
-                                    />
 
-                                </div>
+                                        <td>
+                                            <div className="d-flex align-items-center">
 
-
-                            </td>
-
-                            <td>
-                                <p className="fw-normal mb-1 ms-4">500$</p>
-
-                            </td>
-
-                            <td>
-                                
-                                <p className="fw-normal mb-1 ms-4">SARANG A</p>
-
-                            </td>
+                                                <img
+                                                    src={item.Image}
+                                                    alt=""
+                                                    style={{ width: '100px', height: '100px' }}
 
 
-                            <td>
-                                <p className="fw-normal mb-1 ms-4">PERALASSERY VADAKUMBAD</p>
+                                                />
 
-                            </td>
-
-
-                            <td>
-                                <p className="fw-normal mb-1 ms-4">Order Placed</p>
-
-                            </td>
+                                            </div>
 
 
-                            <td>
-                                <p className="fw-normal mb-1 ms-4">17-08-2024</p>
-
-                            </td>
+                                        </td>
 
 
-                            <td>
-                                10
-                            </td>
+
+                                        <td>{item.Price}</td>
 
 
-                            <td>Black</td>
 
-                        </tr>
+                                        <td>
+
+                                           {item.Size}
+
+                                        </td>
+
+
+                                        <td>
+
+                                           {item.Color}
+
+                                        </td>
+
+
+                                        <td>
+                                           {item.Username}
+                                        </td>
+
+
+                                        <td style={{ width: '15%' }}>
+                                            <p className="fw-normal">
+
+                                               {item.Address}
+
+                                            </p>
+
+                                        </td>
+
+
+                                        <td>
+                                           {item.Status}
+                                        </td>
+
+
+                                        <td>{new Date(item.orderDate).toISOString().split('T')[0]}</td>
+
+
+                                        <td>{item.Cancel ? "Canceled" : "Not yet"}</td>
+
+
+
+                                    </tr>
+
+
+
+                                ))
+
+                                :
+
+                                <h1>NO ORDERS </h1>
+
+                        }
 
                     </tbody>
 

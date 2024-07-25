@@ -63,3 +63,33 @@ export const RemoveCart = async (id) => {
     return CommonApi("DELETE", `${base_Url}/deletecart/${id}`)
 
 }
+
+// Add Order 
+export const AddOrder = async (data) => {
+
+    return CommonApi("POST", `${base_Url}/addorder`,data)
+
+}
+
+// User Order
+export const UserOrder = async (id) => {
+
+    return CommonApi("GET", `${base_Url}/userorder/${id}`)
+
+}
+
+
+// User Order
+export const OrderCancel = async (id) => {
+
+    return CommonApi("PUT", `${base_Url}/ordercancel/${id}`)
+
+}
+
+
+//Show All Orders
+export const AllOrders = async () => {
+
+    return CommonApi("GET", `${base_Url}/allorder`)
+
+}

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import './Product.css'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { showproducts, AddtoCart } from '../Services/AllApi';
-import { ADDSTATUS } from '../STORE/CartSlice';
+import { ADDSTATUS,BuyNow } from '../STORE/CartSlice';
 import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 
@@ -20,6 +20,7 @@ function Product() {
 
   const Dispatch = useDispatch()
 
+  const [Size,setsize] = useState("7")
 
   const Navigate = useNavigate()
 
@@ -89,7 +90,6 @@ function Product() {
 
   }, [product_id, id])
 
-  console.log(product_id);
 
   // handleimge and color
   const handle = (image, color) => {
@@ -157,7 +157,17 @@ function Product() {
   }
 
 
-  console.log(Simliar);
+
+  // handle Buy now 
+  const handlebuy = () => {
+
+
+    Dispatch(BuyNow({ Productname: Product.ProductName, price: Product.Price, image: ImgData, color: ColorData, gender: Product.Gender, size: Size }))
+
+    Navigate('/orderform')
+
+
+  }
 
 
   return (
@@ -270,7 +280,7 @@ function Product() {
 
                   <div className="col-md-4 col-6">
                     <label className="mb-2">Size</label>
-                    <select className="form-select border border-secondary" style={{ height: '35px' }}>
+                    <select className="form-select border border-secondary" style={{ height: '35px' }} onChange={(e)=>{setsize(e.target.value)}}>
                       <option>7</option>
                       <option>8</option>
                       <option>9</option>
@@ -284,11 +294,11 @@ function Product() {
 
                 </div>
 
-                <Link to={'/orderform'}>
+               
 
-                  <a className="btn btn-warning shadow-0 me-3"> Buy now </a>
+                  <a className="btn btn-warning shadow-0 me-3"  onClick={handlebuy}> Buy now </a>
 
-                </Link>
+               
 
                 <a className="btn btn-primary shadow-0" onClick={() => { handleCart(Product._id, Product.ProductName, Product.Price, Product.variants[0].Image, Product.Gender, Product.Category,) }}> <i className="me-1 fa fa-shopping-basket"></i> Add to cart </a>
 
