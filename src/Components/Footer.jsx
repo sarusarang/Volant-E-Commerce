@@ -72,7 +72,7 @@ function Footer() {
                   <Link to={'/auth'} className='foot-link'>Login</Link>
                 </p>
                 <p>
-                  <Link to={''} className='foot-link'>About Us</Link>
+                  <Link to={'/adminlog'} className='foot-link'>Admin Login</Link>
                 </p>
                 <p>
                   <Link to={''} className='foot-link'>Contact US</Link>
