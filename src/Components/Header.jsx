@@ -6,7 +6,8 @@ import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { ShowCart } from '../Services/AllApi';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import { AddHeader } from '../STORE/CartSlice';
 
 function Header() {
 
@@ -20,6 +21,8 @@ function Header() {
     },
   }));
 
+
+  const Dispatch = useDispatch()
 
 
   const {CartStatus} = useSelector((state)=>state.CartRed)
@@ -57,11 +60,7 @@ function Header() {
 
           }
 
-
-
         }
-
-
 
       }
       catch (err) {
@@ -69,7 +68,6 @@ function Header() {
         console.log(err);
 
       }
-
 
     }
 
@@ -106,11 +104,11 @@ function Header() {
 
             <div class="dropdown-content">
 
-              <Link to={''} className='drop-link'>Sandals</Link>
-              <Link to={''} className='drop-link'>Sliper And Flip Flops</Link>
-              <Link to={''} className='drop-link'>Flat Shoes</Link>
-              <Link to={''} className='drop-link'>Casual Shoes</Link>
-              <Link to={''} className='drop-link'>Specail Collections</Link>
+              <Link to={'/list'} className='drop-link' onClick={()=>{Dispatch(AddHeader({gender:'Gents',category:'Sandals'}))}}>Sandals</Link>
+              <Link to={'/list'} className='drop-link' onClick={()=>{Dispatch(AddHeader({gender:'Gents',category:'Sliper And Flip Flops'}))}}>Sliper And Flip Flops</Link>
+              <Link to={'/list'} className='drop-link' onClick={()=>{Dispatch(AddHeader({gender:'Gents',category:'Flat Shoes'}))}}>Flat Shoes</Link>
+              <Link to={'/list'} className='drop-link' onClick={()=>{Dispatch(AddHeader({gender:'Gents',category:'Casual Shoes'}))}}>Casual Shoes</Link>
+              <Link to={'/list'} className='drop-link' onClick={()=>{Dispatch(AddHeader({gender:'Gents',category:'Specail Collections'}))}}>Specail Collections</Link>
 
 
             </div>
@@ -124,11 +122,11 @@ function Header() {
 
             <div class="dropdown-content">
 
-              <Link to={''} className='drop-link'>Sandals</Link>
-              <Link to={''} className='drop-link'>Sliper And Flip Flops</Link>
-              <Link to={''} className='drop-link'>Flat Shoes</Link>
-              <Link to={''} className='drop-link'>Casual Shoes</Link>
-              <Link to={''} className='drop-link'>Women's Specail</Link>
+              <Link to={'/list'} className='drop-link' onClick={()=>{Dispatch(AddHeader({gender:'Ladies',category:'Sandals'}))}}>Sandals</Link>
+              <Link to={'/list'} className='drop-link' onClick={()=>{Dispatch(AddHeader({gender:'Ladies',category:'Sliper And Flip Flops'}))}}>Sliper And Flip Flops</Link>
+              <Link to={'/list'} className='drop-link' onClick={()=>{Dispatch(AddHeader({gender:'Ladies',category:'Flat Shoes'}))}}>Flat Shoes</Link>
+              <Link to={'/list'} className='drop-link' onClick={()=>{Dispatch(AddHeader({gender:'Ladies',category:'Casual Shoes'}))}}>Casual Shoes</Link>
+              <Link to={'/list'} className='drop-link' onClick={()=>{Dispatch(AddHeader({gender:'Ladies',category:'Womens Specail'}))}}>Women's Specail</Link>
 
 
             </div>
@@ -144,9 +142,9 @@ function Header() {
 
             <div class="dropdown-content">
 
-              <Link to={''} className='drop-link'>Sandals</Link>
-              <Link to={''} className='drop-link'>Shoes</Link>
-              <Link to={''} className='drop-link'>School Collections</Link>
+              <Link to={'/list'} className='drop-link' onClick={()=>{Dispatch(AddHeader({gender:'Kids',category:'Sandals'}))}}>Sandals</Link>
+              <Link to={'/list'} className='drop-link' onClick={()=>{Dispatch(AddHeader({gender:'Kids',category:'Shoes'}))}}>Shoes</Link>
+              <Link to={'/list'} className='drop-link' onClick={()=>{Dispatch(AddHeader({gender:'Kids',category:'School collections'}))}}>School Collections</Link>
 
 
             </div>

@@ -5,12 +5,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
 
     CartItems: [],
-    CartStatus:[],
+    CartStatus: [],
     OrderData: {
 
-        Productname: "", Color: "", Size: "", price: "",image:"",gender:"",Cancel:false
+        Productname: "", Color: "", Size: "", price: "", image: "", gender: "", Cancel: false
 
-    }
+    },
+    HeaderData: { Gender: "", Category: "" }
 
 }
 
@@ -31,16 +32,24 @@ const CartSlice = createSlice({
             state.CartItems = action.payload
 
         },
-        ADDSTATUS:(state,action)=>{
+        ADDSTATUS: (state, action) => {
 
             state.CartStatus = action.payload
 
-        },BuyNow: (state, action) => {
+        }, BuyNow: (state, action) => {
 
 
-            const{Productname,price,image,color,gender,size} = action.payload
+            const { Productname, price, image, color, gender, size } = action.payload
 
-            state.OrderData = { Productname:Productname, Color:color, Size:size, price:price,image:image,gender:gender,Cancel:false}
+            state.OrderData = { Productname: Productname, Color: color, Size: size, price: price, image: image, gender: gender, Cancel: false }
+        },
+        AddHeader:(state,action)=>{
+
+            const {gender,category} = action.payload
+
+            state.HeaderData ={Gender:gender , Category:category}
+
+
         }
 
     }
@@ -48,4 +57,4 @@ const CartSlice = createSlice({
 })
 
 export default CartSlice.reducer
-export const {addCartItems,ADDSTATUS,BuyNow} = CartSlice.actions
+export const { addCartItems, ADDSTATUS, BuyNow,AddHeader } = CartSlice.actions

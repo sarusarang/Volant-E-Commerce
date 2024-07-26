@@ -67,3 +67,11 @@
 
   cursor: pointer;
 }
+
+
+/* List */
+.list-border{
+
+  border-top: 3px dotted #ccc;
+
+}

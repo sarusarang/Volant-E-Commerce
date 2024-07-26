@@ -10,6 +10,7 @@ import Orders from './Pages/Orders'
 import AdminLogin from './Pages/AdminLogin'
 import AdminDash from './Pages/AdminDash'
 import OrderForm from './Pages/OrderForm'
+import List from './Pages/List'
 import { Toaster } from 'sonner'
 import { useEffect, useState } from 'react'
 
@@ -77,6 +78,8 @@ function App() {
         <Route path='/admindash' element={<AdminDash />} />
 
         <Route path='/orderform' element={<OrderForm />} />
+
+        <Route path='/list' element={<List />} />
 
 
       </Routes>
