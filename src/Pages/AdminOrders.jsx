@@ -63,6 +63,7 @@ function AdminOrders() {
                             <th>Image</th>
                             <th>Price</th>
                             <th>Size</th>
+                            <th>Quanity</th>
                             <th>Color</th>
                             <th>User Name</th>
                             <th>Address</th>
@@ -115,33 +116,39 @@ function AdminOrders() {
 
 
 
-                                        <td>{item.Price}</td>
+                                        <td>₹{item.Price}</td>
 
 
 
                                         <td>
 
-                                           {item.Size}
+                                            {item.Size}
+
+                                        </td>
+
+                                        <td>
+
+                                            {item.Quanity}
 
                                         </td>
 
 
                                         <td>
 
-                                           {item.Color}
+                                            {item.Color}
 
                                         </td>
 
 
                                         <td>
-                                           {item.Username}
+                                            {item.Username}
                                         </td>
 
 
                                         <td style={{ width: '15%' }}>
                                             <p className="fw-normal">
 
-                                               {item.Address}
+                                                {item.Address}
 
                                             </p>
 
@@ -149,7 +156,7 @@ function AdminOrders() {
 
 
                                         <td>
-                                           {item.Status}
+                                            {item.Status}
                                         </td>
 
 
